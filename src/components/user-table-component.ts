@@ -1,24 +1,27 @@
 import {html, render} from "lit-html"
 
 import store from "../model/store"
-import { User } from "../model/user"
-import userService from "../user-service"
+import { Bixxn } from "../model/bixxn"
+import bixxnService from "../bixxn-service"
 
 const tableTemplate = html`
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <table class="w3-table w3-striped w3-bordered">
         <thead>
             <tr>
-            <th>Id</th><th>Name</th>
+            <th>Id</th><th>Photo</th>
             </tr>
         </thead>
         <tbody></tbody>
     </table>
 `
-const rowTemplate = (user: User) => html`
-    <td>${user.id}</td><td>${user.name}</td>
+const rowTemplate = (bixxn: Bixxn) => html`
+    <td>${bixxn.description}</td>
 `
-class UserTableComponent extends HTMLElement {
+
+/* <td>${bixxn.id}</td> (Ln 19, Col 5) */
+
+class BixxnTableComponent extends HTMLElement {
     private root: ShadowRoot
     constructor() {
         super()
@@ -30,20 +33,21 @@ class UserTableComponent extends HTMLElement {
         .map()
         .distinctUntilChanged()
         */
-        .subscribe(model => this.render(model.users))
-        userService.fetchUsers()
+        .subscribe(model => this.render(model.bixxn))
+        bixxnService.fetchBixxn()
     }
-    private render(users: User[]) {
+    private render(bixxn: Bixxn[]) {
         render(tableTemplate, this.root)
         const body = this.root.querySelector("tbody")
-        users.forEach(user => {
+        bixxn.forEach(b => {
             const row = body.insertRow()
             row.onclick = () => {
-                const event = new CustomEvent("user-selected", {detail: {user}})
+                const event = new CustomEvent("bixxn-selected", {detail: {b}})
                 this.dispatchEvent(event)
             }
-            render(rowTemplate(user), row)
+            render(rowTemplate(b), row)
         })
     }
 }
-customElements.define("user-table-component", UserTableComponent)
+
+customElements.define("bixxn-table-component", BixxnTableComponent)
