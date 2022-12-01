@@ -1,8 +1,8 @@
 import {html, render} from "lit-html"
 
 import store from "../model/store"
-import { Person } from "../model/person"
-import personService from "../person-service"
+import { Dog } from "../model/dog"
+import dogService from "../dog-service"
 
 const tableTemplate = html`
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -15,11 +15,11 @@ const tableTemplate = html`
         <tbody></tbody>
     </table>
 `
-const rowTemplate = (people: Person) => html`
-    <td>${people.description}</td>
+const rowTemplate = (dog: Dog) => html`
+    <td>${dog.description}</td>
 `
 
-/* <td>${person.id}</td> (Ln 19, Col 5) */
+/* <td>${dog.id}</td> (Ln 19, Col 5) */
 
 class PeopleTableComponent extends HTMLElement {
     private root: ShadowRoot
@@ -33,19 +33,19 @@ class PeopleTableComponent extends HTMLElement {
         .map()
         .distinctUntilChanged()
         */
-        .subscribe(model => this.render(model.people))
-        personService.fetchPeople()
+        .subscribe(model => this.render(model.dogs))
+        dogService.fetchDogs()
     }
-    private render(people: Person[]) {
+    private render(dogs: Dog[]) {
         render(tableTemplate, this.root)
         const body = this.root.querySelector("tbody")
-        people.forEach(person => {
+        dogs.forEach(dog => {
             const row = body.insertRow()
             row.onclick = () => {
-                const event = new CustomEvent("person-selected", {detail: {person}})
+                const event = new CustomEvent("dog-selected", {detail: {dog}})
                 this.dispatchEvent(event)
             }
-            render(rowTemplate(person), row)
+            render(rowTemplate(dog), row)
         })
     }
 }

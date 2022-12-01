@@ -1,12 +1,12 @@
 import { BehaviorSubject } from "rxjs"
-import { Person } from "./person"
+import { Dog } from "./dog"
 
 export interface Model {
-    readonly people: Person[]
+    readonly dogs: Dog[]
 }
 
 const initialState: Model = {
-    people:[]
+    dogs:[]
 }
 
 const store = new BehaviorSubject<Model>(initialState);
