@@ -16,12 +16,12 @@ const tableTemplate = html`
     </table>
 `
 const rowTemplate = (dog: Dog) => html`
-    <td>${dog.description}</td>
+    <td>${dog.dogName}</td>
 `
 
 /* <td>${dog.id}</td> (Ln 19, Col 5) */
 
-class PeopleTableComponent extends HTMLElement {
+class DogTableComponent extends HTMLElement {
     private root: ShadowRoot
     constructor() {
         super()
@@ -50,4 +50,4 @@ class PeopleTableComponent extends HTMLElement {
     }
 }
 
-customElements.define("people-table-component", PeopleTableComponent)
+customElements.define("dog-table-component", DogTableComponent)

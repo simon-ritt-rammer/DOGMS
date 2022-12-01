@@ -1,5 +1,8 @@
 export interface Dog {
-    //id: number,
-    description: string,
-    //image_url: string
+    dogName: string,
+    dogHeight: number,
+    dogColors: string,
+    dogDesc: string,
+    dogGroup: string,
+    dogImage: string
 }

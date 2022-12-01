@@ -3,7 +3,7 @@ import "./user-table-component"
 import "./user-component"
 
 const appComponentTemplate = html`
-    <user-table-component id="table"></user-table-component>
+    <dog-table-component id="table"></dog-table-component>
     <user-component id="user"></user-component>
 `
 

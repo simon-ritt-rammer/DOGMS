@@ -2,7 +2,7 @@ import { Dog } from "./model/dog"
 import store from "./model/store"
 import produce from "immer";
 
-const url = "http://www1.lasalle.edu/~blum/c343wks/Dog/DogData.json"
+const url = "https://jsonkeeper.com/b/5Y7Y"
 // für bilder:  Request URL: http://www1.lasalle.edu/~blum/c343wks/Dog/boxer.jpg
 
 
