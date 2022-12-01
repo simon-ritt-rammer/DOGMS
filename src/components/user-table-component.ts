@@ -1,8 +1,8 @@
 import {html, render} from "lit-html"
 
 import store from "../model/store"
-import { Bixxn } from "../model/bixxn"
-import bixxnService from "../bixxn-service"
+import { Person } from "../model/person"
+import personService from "../person-service"
 
 const tableTemplate = html`
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -15,13 +15,13 @@ const tableTemplate = html`
         <tbody></tbody>
     </table>
 `
-const rowTemplate = (bixxn: Bixxn) => html`
-    <td>${bixxn.description}</td>
+const rowTemplate = (people: Person) => html`
+    <td>${people.description}</td>
 `
 
-/* <td>${bixxn.id}</td> (Ln 19, Col 5) */
+/* <td>${person.id}</td> (Ln 19, Col 5) */
 
-class BixxnTableComponent extends HTMLElement {
+class PeopleTableComponent extends HTMLElement {
     private root: ShadowRoot
     constructor() {
         super()
@@ -33,21 +33,21 @@ class BixxnTableComponent extends HTMLElement {
         .map()
         .distinctUntilChanged()
         */
-        .subscribe(model => this.render(model.bixxn))
-        bixxnService.fetchBixxn()
+        .subscribe(model => this.render(model.people))
+        personService.fetchPeople()
     }
-    private render(bixxn: Bixxn[]) {
+    private render(people: Person[]) {
         render(tableTemplate, this.root)
         const body = this.root.querySelector("tbody")
-        bixxn.forEach(b => {
+        people.forEach(person => {
             const row = body.insertRow()
             row.onclick = () => {
-                const event = new CustomEvent("bixxn-selected", {detail: {b}})
+                const event = new CustomEvent("person-selected", {detail: {person}})
                 this.dispatchEvent(event)
             }
-            render(rowTemplate(b), row)
+            render(rowTemplate(person), row)
         })
     }
 }
 
-customElements.define("bixxn-table-component", BixxnTableComponent)
+customElements.define("people-table-component", PeopleTableComponent)
