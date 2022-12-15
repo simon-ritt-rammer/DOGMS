@@ -1,10 +1,10 @@
 import {html, render} from "lit-html"
-import "./user-table-component"
-import "./user-component"
+import "./dog-table-component"
+import "./dog-component"
 
 const appComponentTemplate = html`
     <dog-table-component id="table"></dog-table-component>
-    <user-component id="user"></user-component>
+    <dog-component id="dog"></dog-component>
 `
 
 class AppComponent extends HTMLElement {
@@ -19,14 +19,14 @@ class AppComponent extends HTMLElement {
     }
     render() {
         render(appComponentTemplate, this.shadowRoot)
-        const userTableComponent = this.shadowRoot.getElementById("table")
-        const userComponent: HTMLElement = this.shadowRoot.querySelector("user-component")
-        userTableComponent.addEventListener("user-selected", (e: CustomEvent) => {
-            const user = e.detail.user
-            console.log("user selected", user)
-            userComponent.setAttribute("id", user.id)
-            userTableComponent.style.display = "none"
-            userComponent.style.display = "block"
+        const dogTableComponent = this.shadowRoot.getElementById("table")
+        const dogComponent: HTMLElement = this.shadowRoot.querySelector("dog-component")
+        dogTableComponent.addEventListener("dog-selected", (e: CustomEvent) => {
+            const dog = e.detail.dog
+            console.log("dog selected", dog)
+            dogComponent.setAttribute("id", dog.id)
+            dogTableComponent.style.display = "none"
+            dogComponent.style.display = "block"
         })
     }
 }
