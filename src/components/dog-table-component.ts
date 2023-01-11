@@ -9,7 +9,7 @@ const tableTemplate = html`
     <table class="w3-table w3-striped w3-bordered">
         <thead>
             <tr>
-            <th>Id</th><th>Photo</th>
+            <th>Name</th><th>Photo</th>
             </tr>
         </thead>
         <tbody></tbody>
@@ -28,6 +28,7 @@ class DogTableComponent extends HTMLElement {
         super()
         this.root = this.attachShadow({ mode: "closed" })
     }
+
     async connectedCallback() {
         store
         /*
@@ -37,12 +38,14 @@ class DogTableComponent extends HTMLElement {
         .subscribe(model => this.render(model.dogs))
         dogService.fetchDogs()
     }
+
     private render(dogs: Dog[]) {
         render(tableTemplate, this.root)
         const body = this.root.querySelector("tbody")
         dogs.forEach(dog => {
             const row = body.insertRow()
             row.onclick = () => {
+                console.log('dog image: ', dog.dogImage)
                 const event = new CustomEvent("dog-selected", {detail: {dog}})
                 this.dispatchEvent(event)
             }

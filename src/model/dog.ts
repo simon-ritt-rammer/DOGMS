@@ -1,4 +1,5 @@
 export interface Dog {
+    dogId: number,
     dogName: string,
     dogHeight: number,
     dogColors: string,
