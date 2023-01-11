@@ -6,7 +6,7 @@ const tableTemplate = html`
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <table class="w3-table w3-striped w3-bordered">
         <thead>
-            <tr>
+            <tr class="w3-light-gray">
             <th>Description</th><th>Colors</th><th>Height</th><th>Group</th>
             </tr>
         </thead>

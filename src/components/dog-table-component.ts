@@ -52,8 +52,12 @@ class DogTableComponent extends HTMLElement {
         searchButton.addEventListener("click", () => {
             const searchInput = this.root.querySelector("#search-input") as HTMLInputElement
             const searchTerm = searchInput.value.toLowerCase()
-            this.filteredDogs = this.originalDogs.filter(dog => dog.dogName.toLowerCase().includes(searchTerm))
-            this.render(this.filteredDogs)
+            if (searchInput.value === "doge") {
+                const newTab = window.open("https://www.exodus.com/img/news/content/2022/11/flat-550x550-075-f.u1.jpg", "_blank");
+            } else {
+                this.filteredDogs = this.originalDogs.filter(dog => dog.dogName.toLowerCase().includes(searchTerm))
+                this.render(this.filteredDogs)
+            }
         })
     }
 
