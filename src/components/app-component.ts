@@ -1,6 +1,7 @@
 import {html, render} from "lit-html"
 import "./dog-table-component"
 import "./dog-component"
+import { Dog } from "../model/dog"
 
 const appComponentTemplate = html`
     <dog-table-component id="table"></dog-table-component>
@@ -8,6 +9,7 @@ const appComponentTemplate = html`
 `
 
 class AppComponent extends HTMLElement {
+    
     constructor() {
         super()
         this.attachShadow({mode: "open"})
@@ -28,6 +30,8 @@ class AppComponent extends HTMLElement {
             dogTableComponent.style.display = "none"
             dogComponent.style.display = "block"
         })
+
+        
     }
 }
 

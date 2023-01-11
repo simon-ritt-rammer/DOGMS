@@ -17,6 +17,7 @@ const tableTemplate = html`
 `
 const rowTemplate = (dog: Dog) => html`
     <td>${dog.dogName}</td>
+    <td><img src="http://www1.lasalle.edu/~blum/c343wks/Dog/${dog.dogImage}" alt="${dog.dogImage}">
 `
 
 /* <td>${dog.id}</td> (Ln 19, Col 5) */

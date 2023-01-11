@@ -1,6 +1,8 @@
 import { html, render } from "lit-html"
+import { Dog } from "../model/dog"
 
 class UserComponent extends HTMLElement {
+    private dog: Dog
     static get observedAttributes() {
         return ["id"]
     }
@@ -9,11 +11,15 @@ class UserComponent extends HTMLElement {
         this.attachShadow({mode: "open"})
     }
     attributeChangedCallback(name: string, oldValue: string, value: string) {
-        console.log("TODO: display dog", value)
+        
+
     }
     connectedCallback() {
         console.log("dog connected")
-        
+        this.addEventListener("dog-selected", (event: CustomEvent<{dog: Dog}>) => {
+            this.dog = event.detail.dog
+            console.log(`Selected dog ID: ${this.dog.dogName}`)
+        })
     }
 }
 
