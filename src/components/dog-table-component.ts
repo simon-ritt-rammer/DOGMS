@@ -5,15 +5,19 @@ import { Dog } from "../model/dog"
 import dogService from "../dog-service"
 
 const tableTemplate = html`
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <table class="w3-table w3-striped w3-bordered">
-        <thead>
-            <tr>
-            <th>Name</th><th>Photo</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<div>
+    <input id="search-input" type="text" placeholder="Enter dog name">
+    <button id="search-button">Search</button>
+</div>
+<table class="w3-table w3-striped w3-bordered">
+    <thead>
+        <tr>
+        <th>Name</th><th>Photo</th>
+        </tr>
+    </thead>
+    <tbody id="table-body"></tbody>
+</table>
 `
 const rowTemplate = (dog: Dog) => html`
     <td>${dog.dogName}</td>
@@ -24,26 +28,53 @@ const rowTemplate = (dog: Dog) => html`
 
 class DogTableComponent extends HTMLElement {
     private root: ShadowRoot
+    private filteredDogs: Dog[] = []
+    private originalDogs: Dog[] = []
     constructor() {
         super()
         this.root = this.attachShadow({ mode: "closed" })
     }
 
     async connectedCallback() {
-        store
+        store.subscribe(model => {
+            this.render(model.dogs)
+            this.filteredDogs = model.dogs
+            this.originalDogs = model.dogs
+        })
+        //store
         /*
         .map()
         .distinctUntilChanged()
         */
-        .subscribe(model => this.render(model.dogs))
+        //.subscribe(model => this.render(model.dogs))
         dogService.fetchDogs()
+        const searchButton = this.root.querySelector("#search-button")
+        searchButton.addEventListener("click", () => {
+            const searchInput = this.root.querySelector("#search-input") as HTMLInputElement
+            const searchTerm = searchInput.value.toLowerCase()
+            this.filteredDogs = this.originalDogs.filter(dog => dog.dogName.toLowerCase().includes(searchTerm))
+            this.render(this.filteredDogs)
+        })
     }
 
     private render(dogs: Dog[]) {
-        render(tableTemplate, this.root)
+        /*render(tableTemplate, this.root)
         const body = this.root.querySelector("tbody")
         dogs.forEach(dog => {
             const row = body.insertRow()
+            row.onclick = () => {
+                console.log('dog image: ', dog.dogImage)
+                const event = new CustomEvent("dog-selected", {detail: {dog}})
+                this.dispatchEvent(event)
+            }
+            render(rowTemplate(dog), row)
+        })*/
+        render(tableTemplate, this.root)
+        const body = this.root.querySelector("tbody")
+        body.innerHTML = ""
+        dogs.forEach(dog => {
+            const row = body.insertRow()
+            // ...
             row.onclick = () => {
                 console.log('dog image: ', dog.dogImage)
                 const event = new CustomEvent("dog-selected", {detail: {dog}})
